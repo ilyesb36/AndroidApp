@@ -8,20 +8,20 @@
     tools:context=".MainActivity" >
 
     <ImageView
-        android:id="@+id/shop"
+        android:id="@+id/banc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="394dp"
-        android:onClick="goActShop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/banc" />
 
     <ImageView
-        android:id="@+id/jouer"
+        android:id="@+id/playIcon"
         android:layout_width="75dp"
         android:layout_height="90dp"
         android:layout_marginTop="304dp"
+        android:onClick="goPlayGame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.199"
@@ -31,7 +31,7 @@
         app:srcCompat="@drawable/jouer" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/shopIcon"
         android:layout_width="75dp"
         android:layout_height="90dp"
         android:onClick="goActShop"

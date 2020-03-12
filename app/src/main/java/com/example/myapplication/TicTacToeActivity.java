@@ -1,0 +1,200 @@
+package com.example.myapplication;
+
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageButton;
+
+import androidx.appcompat.app.AlertDialog;
+
+public class TicTacToeActivity extends Activity implements View.OnClickListener {
+
+    private ImageButton[][] btns;
+    private boolean player1Turn;
+    private int roundCount;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_tictactoe);
+
+        this.player1Turn = true;
+        btns = new ImageButton[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                String id = "btn_" + i + j;
+                int resId = getResources().getIdentifier(id, "id", getPackageName());
+                btns[i][j] = findViewById(resId);
+                btns[i][j].setTag("");
+                btns[i][j].setOnClickListener(this);
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        ImageButton imgBtn = ((ImageButton) view);
+
+        if ( !imgBtn.getTag().equals("") ) {
+            return;
+        }
+
+        if (player1Turn) {
+            imgBtn.setImageResource(R.drawable.cross);
+            imgBtn.setTag("X");
+            player1Turn = false;
+        } else {
+            imgBtn.setImageResource(R.drawable.round);
+            imgBtn.setTag("O");
+            player1Turn = true;
+        }
+
+        this.roundCount++;
+
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        if (this.checkWins()) {
+            if (!player1Turn) {
+                builder1.setTitle("Bravo ! Vous avez gagné");
+                builder1.setMessage("Vous pouvez récupérer 10 pièces !");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Récupérer",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Aller vers l'accueil
+                                dialog.cancel();
+                                Intent intent = new Intent(TicTacToeActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "Rejouer",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                resetGame();
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert = builder1.create();
+                alert.show();
+            } else {
+                builder1.setTitle("Dommage, vous avez perdu...");
+                builder1.setMessage("Vous voulez faire un autre essai ?");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Sortir",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Aller vers page d'accueil
+                                dialog.cancel();
+                                Intent intent = new Intent(TicTacToeActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "Rejouer",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                resetGame();
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert = builder1.create();
+                alert.show();
+            }
+        } else if (this.roundCount == 9) {
+            builder1.setTitle("Égalité !");
+            builder1.setMessage("Vous voulez faire un autre essai ?");
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Sortir",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Aller vers page d'accueil
+                            dialog.cancel();
+                            Intent intent = new Intent(TicTacToeActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+            builder1.setNegativeButton(
+                    "Rejouer",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            resetGame();
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert = builder1.create();
+            alert.show();
+        }
+    }
+
+    private boolean checkWins() {
+        boolean wins = false;
+        String[][] cases = new String[3][3];
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                cases[i][j] = btns[i][j].getTag().toString();
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            if (cases[i][0].equals(cases[i][1])
+                    && cases[i][0].equals(cases[i][2])
+                    && !cases[i][0].equals("")) {
+                wins = true;
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            if (cases[0][i].equals(cases[1][i])
+                    && cases[0][i].equals(cases[2][i])
+                    && !cases[0][i].equals("")) {
+                wins = true;
+            }
+        }
+
+        if (cases[0][0].equals(cases[1][1])
+                && cases[0][0].equals(cases[2][2])
+                && !cases[0][0].equals("")) {
+            wins = true;
+        }
+
+        if (cases[0][2].equals(cases[1][1])
+                && cases[0][2].equals(cases[2][0])
+                && !cases[0][2].equals("")) {
+            wins = true;
+        }
+
+        return wins;
+    }
+
+    private void resetGame() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                btns[i][j].setImageResource(android.R.color.transparent);
+                btns[i][j].setTag("");
+            }
+        }
+
+        roundCount = 0;
+        player1Turn = true;
+    }
+
+}

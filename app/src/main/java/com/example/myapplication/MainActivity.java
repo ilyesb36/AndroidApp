@@ -20,12 +20,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         MediaPlayer ring= MediaPlayer.create(MainActivity.this,R.raw.ring);
         ring.start();
-
-
     }
 
     public void goActShop(View view) {
-        Intent intent=new Intent(MainActivity.this,ShopActivity.class);
+        Intent intent = new Intent(MainActivity.this, ShopActivity.class);
+        startActivity(intent);
+    }
+
+    public void goPlayGame(View view) {
+        Intent intent = new Intent(MainActivity.this, TicTacToeActivity.class);
         startActivity(intent);
     }
 }
