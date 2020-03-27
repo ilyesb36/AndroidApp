@@ -8,11 +8,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.myapplication.classes.Produit;
 import com.example.myapplication.classes.ProduitsBDD;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class TicTacToeActivity extends Activity implements View.OnClickListener {
 
@@ -58,20 +63,36 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
             return;
         }
 
-        if (player1Turn) {
-            imgBtn.setImageResource(R.drawable.cross);
-            imgBtn.setTag("X");
-            player1Turn = false;
-        } else {
-            imgBtn.setImageResource(R.drawable.round);
-            imgBtn.setTag("O");
+        imgBtn.setImageResource(R.drawable.cross);
+        imgBtn.setTag("X");
+        player1Turn = false;
+
+        if (!checkWins()) {
+            // Obtenir les cases libres
+            ArrayList<ArrayList<Integer>> freeCases = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (btns[i][j].getTag().toString().equals("")) {
+                        ArrayList<Integer> temp = new ArrayList<>();
+                        temp.add(i);
+                        temp.add(j);
+                        freeCases.add(temp);
+                    }
+                }
+            }
+
+            // Au tour de bot
+            Random r = new Random();
+            int pos = r.nextInt(freeCases.size());
+            btns[freeCases.get(pos).get(0)][freeCases.get(pos).get(1)].setImageResource(R.drawable.round);
+            btns[freeCases.get(pos).get(0)][freeCases.get(pos).get(1)].setTag("0");
             player1Turn = true;
+
+            this.roundCount++;
         }
 
-        this.roundCount++;
-
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         if (this.checkWins()) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
             if (!player1Turn) {
                 builder1.setTitle("Bravo ! Vous avez gagné");
                 builder1.setMessage("Vous pouvez récupérer 20 pièces !");
@@ -95,13 +116,13 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
                 alert.show();
             } else {
                 builder1.setTitle("Dommage, vous avez perdu...");
-                builder1.setMessage("Vous avez perdu 5 pièces...");
+                builder1.setMessage("Vous avez perdu 10 pièces...");
                 builder1.setCancelable(false);
 
                 builder1.setPositiveButton("Sortir", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // Diminuer le nombre de gold de 5
-                                updateGold(-5);
+                                // Diminuer le nombre de gold de 10
+                                updateGold(-10);
                                 // Aller vers page d'accueil
                                 dialog.cancel();
                                 Intent intent = new Intent(TicTacToeActivity.this, MainActivity.class);
@@ -114,6 +135,7 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
                 alert.show();
             }
         } else if (this.roundCount == 9) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
             builder1.setTitle("Égalité !");
             builder1.setMessage("Vous voulez faire un autre essai ?");
             builder1.setCancelable(false);
@@ -205,6 +227,7 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
             Produit produit = new Produit("Experience", exp - 500);
             produitsBDD.updateProduit("Experience", produit);
             produitsBDD.updateProduit("Level", new Produit("Level", produitsBDD.getQuantityWithTitle("Level") + 1));
+            Toast.makeText(this, "Bravo ! Votre Vimo a augmenté de niveau", Toast.LENGTH_LONG).show();
         } else {
             Produit produit = new Produit("Experience", exp);
             produitsBDD.updateProduit("Experience", produit);
