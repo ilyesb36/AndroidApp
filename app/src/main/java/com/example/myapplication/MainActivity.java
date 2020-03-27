@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     TextView goldValue;
     RoundCornerProgressBar expBar;
     RoundCornerProgressBar healthBar;
+    RoundCornerProgressBar foodBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
             produitsBDD.insertProduit(produit);
         }
 
+        if (produitsBDD.getProduitWithTitre("Food") == null) {
+            Produit produit = new Produit("Food", 200);
+            produitsBDD.insertProduit(produit);
+        }
+
         if (produitsBDD.getProduitWithTitre("Experience") == null) {
             Produit produit = new Produit("Experience", 0);
             produitsBDD.insertProduit(produit);
@@ -80,8 +86,10 @@ public class MainActivity extends AppCompatActivity {
         this.goldValue = findViewById(R.id.goldValue);
         this.expBar = findViewById(R.id.expBar);
         this.healthBar = findViewById(R.id.healthBar);
+        this.foodBar = findViewById(R.id.foodBar);
         this.level.setText(String.valueOf(produitsBDD.getQuantityWithTitle("Level")));
         this.expBar.setProgress(produitsBDD.getQuantityWithTitle("Experience"));
+        this.foodBar.setProgress(produitsBDD.getQuantityWithTitle("Food"));
         this.healthBar.setProgress(produitsBDD.getQuantityWithTitle("Health"));
 
         // Load gold value from a file of internal storage
