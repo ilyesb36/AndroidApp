@@ -100,6 +100,8 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
 
                 builder1.setPositiveButton("Récupéré", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                // Baisser la satiété
+                                decreseStiety(-20);
                                 // Augmenter le nombre de gold de 20
                                 updateGold(20);
                                 // Augmenter l'expérience
@@ -121,6 +123,8 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
 
                 builder1.setPositiveButton("Sortir", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                // Baisser la satiété
+                                decreseStiety(-20);
                                 // Diminuer le nombre de gold de 10
                                 updateGold(-10);
                                 // Aller vers page d'accueil
@@ -142,6 +146,8 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
 
             builder1.setPositiveButton("Sortir", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            // Baisser la satiété
+                            decreseStiety(-20);
                             // Aller vers page d'accueil
                             dialog.cancel();
                         }
@@ -149,6 +155,9 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
 
             builder1.setNegativeButton("Rejouer", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            // Baisser la satiété
+                            decreseStiety(-20);
+                            // Recommencer le jeu
                             resetGame();
                             dialog.cancel();
                         }
@@ -210,6 +219,17 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
 
         roundCount = 0;
         player1Turn = true;
+    }
+
+    private void decreseStiety(int value) {
+        produitsBDD = new ProduitsBDD(this);
+        produitsBDD.open();
+        int satiety = produitsBDD.getProduitWithTitre("Food").getQuantity() + value;
+        if (satiety < 0) {
+            satiety = 0;
+        }
+        Produit produit = new Produit("Food", satiety);
+        produitsBDD.updateProduit("Food", produit);
     }
 
     private void updateGold(int value) {
