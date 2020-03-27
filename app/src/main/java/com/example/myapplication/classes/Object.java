@@ -1,15 +1,15 @@
 package com.example.myapplication.classes;
 
-public class Produit {
+public class Object {
 
     private int id;
     private String titre;
     private int quantity;
 
-    public Produit() {
+    public Object() {
     }
 
-    public Produit(String titre, int quantity) {
+    public Object(String titre, int quantity) {
         this.titre = titre;
         this.quantity = quantity;
     }

@@ -11,8 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.classes.Produit;
-import com.example.myapplication.classes.ProduitsBDD;
+import com.example.myapplication.classes.ObjetctsBDD;
 
 import java.util.HashMap;
 
@@ -29,7 +28,6 @@ public class DinnerActivity extends AppCompatActivity {
     ImageView iThird;
 
     HashMap<String,String> list;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +48,7 @@ public class DinnerActivity extends AppCompatActivity {
         iSecond = (ImageView) findViewById(R.id.second);
         iThird = (ImageView) findViewById(R.id.third);
 
-
-
         updateList();
-
 
         quantityFirst = (TextView) findViewById(R.id.quantityFirst);
         quantitySecond = (TextView) findViewById(R.id.quantitySecond);
@@ -91,22 +86,19 @@ public class DinnerActivity extends AppCompatActivity {
         }
     }
 
-
     public void updateQuatity(){
-        ProduitsBDD produitsBDD = new ProduitsBDD(this);
-        produitsBDD.open();
+        ObjetctsBDD objetctsBDD = new ObjetctsBDD(this);
+        objetctsBDD.open();
         String first = (String) list.keySet().toArray()[position];
         if (list.size()>position+1){
             String second = (String) list.keySet().toArray()[position + 1];
-            quantitySecond.setText(Integer.toString(produitsBDD.getQuantityWithTitle(second)));
+            quantitySecond.setText(Integer.toString(objetctsBDD.getQuantityWithTitle(second)));
             if(list.size()>position+2){
                 String third = (String) list.keySet().toArray()[position + 2];
-                quantityThird.setText(Integer.toString(produitsBDD.getQuantityWithTitle(third)));
+                quantityThird.setText(Integer.toString(objetctsBDD.getQuantityWithTitle(third)));
             }
         }
-
-        quantityFirst.setText(Integer.toString(produitsBDD.getQuantityWithTitle(first)));
-
+        quantityFirst.setText(Integer.toString(objetctsBDD.getQuantityWithTitle(first)));
     }
 
     public void goMainActivity(View view) {
@@ -116,12 +108,12 @@ public class DinnerActivity extends AppCompatActivity {
     }
 
     public void eatApple(View view) {
-        ProduitsBDD produitsBDD = new ProduitsBDD(this);
-        produitsBDD.open();
+        ObjetctsBDD objetctsBDD = new ObjetctsBDD(this);
+        objetctsBDD.open();
 
         String first = (String) list.keySet().toArray()[position];
-        if(produitsBDD.getQuantityWithTitle(first)>0){
-            produitsBDD.decrementerProduit(first,1);
+        if(objetctsBDD.getQuantityWithTitle(first)>0){
+            objetctsBDD.decrementerProduit(first,1);
         }else {
             Toast.makeText(this, "Vous n'avez pas assez de " + first + " ", Toast.LENGTH_SHORT).show();
         }
@@ -131,8 +123,8 @@ public class DinnerActivity extends AppCompatActivity {
     }
 
     public void eatBanana(View view) {
-        ProduitsBDD produitsBDD = new ProduitsBDD(this);
-        produitsBDD.open();
+        ObjetctsBDD objetctsBDD = new ObjetctsBDD(this);
+        objetctsBDD.open();
 
         String second = "Banana";
         if (list.size()>position+1){
@@ -140,8 +132,8 @@ public class DinnerActivity extends AppCompatActivity {
         }else {
              second = (String) list.keySet().toArray()[position - 3 + 1];
         }
-        if(produitsBDD.getQuantityWithTitle(second)>0){
-            produitsBDD.decrementerProduit(second,1);
+        if(objetctsBDD.getQuantityWithTitle(second)>0){
+            objetctsBDD.decrementerProduit(second,1);
         }else {
             Toast.makeText(this, "Vous n'avez pas assez de " + second+ " ", Toast.LENGTH_SHORT).show();
         }
@@ -155,11 +147,11 @@ public class DinnerActivity extends AppCompatActivity {
         }else {
             third = (String) list.keySet().toArray()[position - 3 + 2];
         }
-        ProduitsBDD produitsBDD = new ProduitsBDD(this);
-        produitsBDD.open();
+        ObjetctsBDD objetctsBDD = new ObjetctsBDD(this);
+        objetctsBDD.open();
 
-        if(produitsBDD.getQuantityWithTitle(third)>0){
-            produitsBDD.decrementerProduit(third,1);
+        if(objetctsBDD.getQuantityWithTitle(third)>0){
+            objetctsBDD.decrementerProduit(third,1);
         }else {
             Toast.makeText(this, "Vous n'avez pas assez de " + third+ " ", Toast.LENGTH_SHORT).show();
         }

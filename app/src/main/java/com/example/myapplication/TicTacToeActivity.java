@@ -12,16 +12,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.myapplication.classes.Produit;
-import com.example.myapplication.classes.ProduitsBDD;
+import com.example.myapplication.classes.Object;
+import com.example.myapplication.classes.ObjetctsBDD;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 public class TicTacToeActivity extends Activity implements View.OnClickListener {
 
-    ProduitsBDD produitsBDD;
+    ObjetctsBDD objetctsBDD;
     private ImageButton[][] btns;
     private boolean player1Turn;
     private int roundCount;
@@ -222,35 +221,35 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
     }
 
     private void decreseStiety(int value) {
-        produitsBDD = new ProduitsBDD(this);
-        produitsBDD.open();
-        int satiety = produitsBDD.getProduitWithTitre("Food").getQuantity() + value;
+        objetctsBDD = new ObjetctsBDD(this);
+        objetctsBDD.open();
+        int satiety = objetctsBDD.getProduitWithTitre("Food").getQuantity() + value;
         if (satiety < 0) {
             satiety = 0;
         }
-        Produit produit = new Produit("Food", satiety);
-        produitsBDD.updateProduit("Food", produit);
+        Object object = new Object("Food", satiety);
+        objetctsBDD.updateProduit("Food", object);
     }
 
     private void updateGold(int value) {
-        produitsBDD = new ProduitsBDD(this);
-        produitsBDD.open();
-        Produit produit = new Produit("Gold", produitsBDD.getProduitWithTitre("Gold").getQuantity() + value);
-        produitsBDD.updateProduit("Gold", produit);
+        objetctsBDD = new ObjetctsBDD(this);
+        objetctsBDD.open();
+        Object object = new Object("Gold", objetctsBDD.getProduitWithTitre("Gold").getQuantity() + value);
+        objetctsBDD.updateProduit("Gold", object);
     }
 
     private void increaseExp(int value) {
-        produitsBDD = new ProduitsBDD(this);
-        produitsBDD.open();
-        int exp = produitsBDD.getQuantityWithTitle("Experience") + value;
+        objetctsBDD = new ObjetctsBDD(this);
+        objetctsBDD.open();
+        int exp = objetctsBDD.getQuantityWithTitle("Experience") + value;
         if (exp > 500) {
-            Produit produit = new Produit("Experience", exp - 500);
-            produitsBDD.updateProduit("Experience", produit);
-            produitsBDD.updateProduit("Level", new Produit("Level", produitsBDD.getQuantityWithTitle("Level") + 1));
+            Object object = new Object("Experience", exp - 500);
+            objetctsBDD.updateProduit("Experience", object);
+            objetctsBDD.updateProduit("Level", new Object("Level", objetctsBDD.getQuantityWithTitle("Level") + 1));
             Toast.makeText(this, "Bravo ! Votre Vimo a augmenté de niveau", Toast.LENGTH_LONG).show();
         } else {
-            Produit produit = new Produit("Experience", exp);
-            produitsBDD.updateProduit("Experience", produit);
+            Object object = new Object("Experience", exp);
+            objetctsBDD.updateProduit("Experience", object);
         }
 
     }

@@ -144,4 +144,5 @@
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
     <color name="ExpBlue">#07A1FF</color>
+    <color name="NameGrey">#2B2B2B</color>
 </resources>
