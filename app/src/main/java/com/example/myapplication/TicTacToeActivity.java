@@ -11,6 +11,15 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.example.myapplication.classes.Constante;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class TicTacToeActivity extends Activity implements View.OnClickListener {
 
     private ImageButton[][] btns;
@@ -20,6 +29,11 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set full screen
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // Set no title
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_tictactoe);
 
@@ -34,6 +48,12 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
                 btns[i][j].setOnClickListener(this);
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
     }
 
     @Override
@@ -61,13 +81,13 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
         if (this.checkWins()) {
             if (!player1Turn) {
                 builder1.setTitle("Bravo ! Vous avez gagné");
-                builder1.setMessage("Vous pouvez récupérer 10 pièces !");
+                builder1.setMessage("Vous pouvez récupérer 20 pièces !");
                 builder1.setCancelable(true);
 
-                builder1.setPositiveButton(
-                        "Récupérer",
-                        new DialogInterface.OnClickListener() {
+                builder1.setPositiveButton("Récupéré", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                // Augmenter le nombre de gold de 20
+                                updateGold(20);
                                 // Aller vers l'accueil
                                 dialog.cancel();
                                 Intent intent = new Intent(TicTacToeActivity.this, MainActivity.class);
@@ -76,39 +96,21 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
                             }
                         });
 
-                builder1.setNegativeButton(
-                        "Rejouer",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                resetGame();
-                                dialog.cancel();
-                            }
-                        });
-
                 AlertDialog alert = builder1.create();
                 alert.show();
             } else {
                 builder1.setTitle("Dommage, vous avez perdu...");
-                builder1.setMessage("Vous voulez faire un autre essai ?");
+                builder1.setMessage("Vous avez perdu 5 pièces...");
                 builder1.setCancelable(true);
 
-                builder1.setPositiveButton(
-                        "Sortir",
-                        new DialogInterface.OnClickListener() {
+                builder1.setPositiveButton("Sortir", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                // Diminuer le nombre de gold de 5
+                                updateGold(-5);
                                 // Aller vers page d'accueil
                                 dialog.cancel();
                                 Intent intent = new Intent(TicTacToeActivity.this, MainActivity.class);
                                 startActivity(intent);
-                            }
-                        });
-
-                builder1.setNegativeButton(
-                        "Rejouer",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                resetGame();
-                                dialog.cancel();
                             }
                         });
 
@@ -120,21 +122,14 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
             builder1.setMessage("Vous voulez faire un autre essai ?");
             builder1.setCancelable(true);
 
-            builder1.setPositiveButton(
-                    "Sortir",
-                    new DialogInterface.OnClickListener() {
+            builder1.setPositiveButton("Sortir", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // Aller vers page d'accueil
                             dialog.cancel();
-                            Intent intent = new Intent(TicTacToeActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
                         }
                     });
 
-            builder1.setNegativeButton(
-                    "Rejouer",
-                    new DialogInterface.OnClickListener() {
+            builder1.setNegativeButton("Rejouer", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             resetGame();
                             dialog.cancel();
@@ -197,6 +192,64 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
 
         roundCount = 0;
         player1Turn = true;
+    }
+
+    private void updateGold(int value) {
+        String gold = "";
+
+        FileInputStream fis = null;
+
+        try {
+            fis = openFileInput(Constante.GOLD_FILE);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+
+            while ((text = br.readLine()) != null) {
+                sb.append(text).append("\n");
+            }
+
+            gold = sb.toString().trim();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        if (Integer.parseInt(gold) + value < 0) {
+            gold = "0";
+        } else {
+            gold = String.valueOf(Integer.parseInt(gold) + value);
+        }
+
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(Constante.GOLD_FILE, MODE_PRIVATE);
+            fos.write(gold.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }
