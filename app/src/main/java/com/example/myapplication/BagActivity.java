@@ -46,6 +46,7 @@ public class BagActivity extends AppCompatActivity {
             produitList.add(new Produit("Potion", produitsBDD.getQuantityWithTitle("Potion")));
         }
 
+
         final ProduitListAdapter adapter = new ProduitListAdapter(this, R.layout.adapter_view_layout, produitList);
         listView.setAdapter(adapter);
 
