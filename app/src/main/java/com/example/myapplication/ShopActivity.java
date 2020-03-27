@@ -39,7 +39,7 @@ public class ShopActivity extends AppCompatActivity {
         if (produitsBDD.getProduitWithTitre("Gold").getQuantity()>15){
             produitsBDD.ajouterProduit("Apple");
             Produit produit = new Produit("Gold", produitsBDD.getProduitWithTitre("Gold").getQuantity() - 15);
-            produitsBDD.updateProduit("Gold", produit);
+            produitsBDD.updateProduit("Gold", produit);Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_SHORT).show();
             Toast.makeText(this, "Vous avez maintenant " + Integer.toString(produitsBDD.getProduitWithTitre("Apple").getQuantity()) + " pommes", Toast.LENGTH_LONG).show();
         } else Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_SHORT).show();
     }

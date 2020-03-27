@@ -36,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
             produitsBDD.insertProduit(produit);
         }
 
+        if (produitsBDD.getProduitWithTitre("Orange") == null){
+            Produit produit = new Produit("Orange", 50);
+            produitsBDD.insertProduit(produit);
+        }
+
+        if (produitsBDD.getProduitWithTitre("Strawberry") == null){
+            Produit produit = new Produit("Strawberry", 20);
+            produitsBDD.insertProduit(produit);
+        }
         if (produitsBDD.getProduitWithTitre("Banana") == null){
             Produit produit = new Produit("Banana", 0);
             produitsBDD.insertProduit(produit);
@@ -102,8 +111,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goActBag(View view) {
-        Intent intent = new Intent(MainActivity.this, BagActivity.class);
+    public void goActDinner(View view) {
+        Intent intent = new Intent(MainActivity.this, DinnerActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

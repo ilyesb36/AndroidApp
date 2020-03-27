@@ -54,6 +54,11 @@ public class ProduitsBDD {
         values.put(COL_QUANTITY, getQuantityWithTitle(titre)+1);
         return bdd.update(TABLE_PRODUIT, values, COL_TITRE + " LIKE \"" + titre +"\"", null);
     }
+    public int decrementerProduit(String titre,int quantity){
+        ContentValues values = new ContentValues();
+        values.put(COL_QUANTITY, getQuantityWithTitle(titre)-quantity);
+        return bdd.update(TABLE_PRODUIT, values, COL_TITRE + " LIKE \"" + titre +"\"", null);
+    }
     public int removeProduitWithID(int id){
         //Suppression d'un livre de la BDD grâce à l'ID
         return bdd.delete(TABLE_PRODUIT, COL_ID + " = " +id, null);

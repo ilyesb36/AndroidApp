@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/home" />
 
     <ImageView
-        android:id="@+id/apple"
+        android:id="@+id/first"
         android:layout_width="109dp"
         android:layout_height="102dp"
         android:onClick="addApple"
@@ -59,7 +59,7 @@
         app:layout_constraintVertical_bias="0.443" />
 
     <ImageView
-        android:id="@+id/banana"
+        android:id="@+id/second"
         android:layout_width="109dp"
         android:layout_height="102dp"
         android:onClick="addBanana"
