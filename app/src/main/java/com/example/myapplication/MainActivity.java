@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (objetctsBDD.getProduitWithTitre("Gold") == null){
-            Object object = new Object("Gold", 200);
+            Object object = new Object("Gold", 100);
             objetctsBDD.insertProduit(object);
         }
 
