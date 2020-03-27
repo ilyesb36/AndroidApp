@@ -128,6 +128,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         this.level.setText(String.valueOf(objetctsBDD.getQuantityWithTitle("Level")));
         this.expBar.setProgress(objetctsBDD.getQuantityWithTitle("Experience"));
+        this.foodBar.setProgress(objetctsBDD.getQuantityWithTitle("Food"));
+        this.healthBar.setProgress(objetctsBDD.getQuantityWithTitle("Health"));
+        int gold = objetctsBDD.getProduitWithTitre("Gold").getQuantity();
+        goldValue.setText(Integer.toString(gold));
     }
 
     public void goActShop(View view) {
