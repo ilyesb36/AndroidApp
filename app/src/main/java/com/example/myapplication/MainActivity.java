@@ -24,11 +24,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void goActShop(View view) {
         Intent intent = new Intent(MainActivity.this, ShopActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
     public void goPlayGame(View view) {
         Intent intent = new Intent(MainActivity.this, TicTacToeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

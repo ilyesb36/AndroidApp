@@ -71,6 +71,7 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
                                 // Aller vers l'accueil
                                 dialog.cancel();
                                 Intent intent = new Intent(TicTacToeActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }
                         });
@@ -126,6 +127,7 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
                             // Aller vers page d'accueil
                             dialog.cancel();
                             Intent intent = new Intent(TicTacToeActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }
                     });

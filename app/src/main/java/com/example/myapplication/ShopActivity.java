@@ -16,6 +16,7 @@ public class ShopActivity extends AppCompatActivity {
 
     public void goMainActivity(View view) {
         Intent intent = new Intent(ShopActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }
