@@ -10,15 +10,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.example.myapplication.classes.Constante;
 import com.example.myapplication.classes.Produit;
 import com.example.myapplication.classes.ProduitsBDD;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -50,19 +43,21 @@ public class MainActivity extends AppCompatActivity {
             Produit produit = new Produit("Potion", 0);
             produitsBDD.insertProduit(produit);
         }
-        if (produitsBDD.getProduitWithTitre("Player") == null){
-            Produit produit = new Produit("Player", 200);
+        if (produitsBDD.getProduitWithTitre("Gold") == null){
+            Produit produit = new Produit("Gold", 200);
             produitsBDD.insertProduit(produit);
         }
-
+        if (produitsBDD.getProduitWithTitre("Health") == null) {
+            Produit produit = new Produit("Health", 200);
+            produitsBDD.insertProduit(produit);
+        }
 
         this.goldValue = findViewById(R.id.goldValue);
 
         // Load gold value from a file of internal storage
-        this.getGold();
-
-        int gold = produitsBDD.getProduitWithTitre("Player").getQuantity();
+        int gold = produitsBDD.getProduitWithTitre("Gold").getQuantity();
         goldValue.setText(Integer.toString(gold));
+
         MediaPlayer ring = MediaPlayer.create(MainActivity.this,R.raw.ring);
         ring.start();
     }
@@ -70,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        this.getGold();
     }
 
     public void goActShop(View view) {
@@ -83,34 +77,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, TicTacToeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-    }
-
-    private void getGold() {
-        FileInputStream fis = null;
-        try {
-            fis = openFileInput(Constante.GOLD_FILE);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String text;
-
-            while ((text = br.readLine()) != null) {
-                sb.append(text).append("\n");
-            }
-            goldValue.setText(sb.toString());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 }
 

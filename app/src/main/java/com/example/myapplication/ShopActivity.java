@@ -36,27 +36,25 @@ public class ShopActivity extends AppCompatActivity {
 
         produitsBDD.open();
 
-        if (produitsBDD.getProduitWithTitre("Player").getQuantity()>15){
+        if (produitsBDD.getProduitWithTitre("Gold").getQuantity()>15){
             produitsBDD.ajouterProduit("Apple");
-            Produit produit = new Produit("Player", produitsBDD.getProduitWithTitre("Player").getQuantity() - 15);
-            produitsBDD.updateProduit("Player", produit);
+            Produit produit = new Produit("Gold", produitsBDD.getProduitWithTitre("Gold").getQuantity() - 15);
+            produitsBDD.updateProduit("Gold", produit);
             Toast.makeText(this, "Vous avez maintenant " + Integer.toString(produitsBDD.getProduitWithTitre("Apple").getQuantity()) + " pommes", Toast.LENGTH_LONG).show();
-        }else Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_LONG).show();
+        } else Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_SHORT).show();
     }
-
-
 
     public void addBanana(View view) {
         ProduitsBDD produitsBDD = new ProduitsBDD(this);
 
         produitsBDD.open();
 
-        if (produitsBDD.getProduitWithTitre("Player").getQuantity()>8){
+        if (produitsBDD.getProduitWithTitre("Gold").getQuantity()>8){
             produitsBDD.ajouterProduit("Banana");
-            Produit produit = new Produit("Player", produitsBDD.getProduitWithTitre("Player").getQuantity() - 8);
-            produitsBDD.updateProduit("Player", produit);
+            Produit produit = new Produit("Gold", produitsBDD.getProduitWithTitre("Gold").getQuantity() - 8);
+            produitsBDD.updateProduit("Gold", produit);
             Toast.makeText(this, "Vous avez maintenant " + Integer.toString(produitsBDD.getProduitWithTitre("Banana").getQuantity()) + " bananes", Toast.LENGTH_LONG).show();
-        }else Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_LONG).show();
+        }else Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_SHORT).show();
     }
 
     public void addPotion(View view) {
@@ -64,11 +62,11 @@ public class ShopActivity extends AppCompatActivity {
 
         produitsBDD.open();
 
-        if (produitsBDD.getProduitWithTitre("Player").getQuantity()>50){
+        if (produitsBDD.getProduitWithTitre("Gold").getQuantity()>50){
             produitsBDD.ajouterProduit("Potion");
-            Produit produit = new Produit("Player", produitsBDD.getProduitWithTitre("Player").getQuantity() - 50);
-            produitsBDD.updateProduit("Player", produit);
+            Produit produit = new Produit("Gold", produitsBDD.getProduitWithTitre("Gold").getQuantity() - 50);
+            produitsBDD.updateProduit("Gold", produit);
             Toast.makeText(this, "Vous avez maintenant "  + Integer.toString(produitsBDD.getProduitWithTitre("Potion").getQuantity()) + " potions", Toast.LENGTH_LONG).show();
-        }else Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_LONG).show();
+        }else Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_SHORT).show();
     }
 }

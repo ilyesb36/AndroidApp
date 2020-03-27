@@ -11,16 +11,8 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.myapplication.classes.Constante;
 import com.example.myapplication.classes.Produit;
 import com.example.myapplication.classes.ProduitsBDD;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class TicTacToeActivity extends Activity implements View.OnClickListener {
 
@@ -203,63 +195,8 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
 
         produitsBDD.open();
 
-        Produit produit = new Produit("Player", produitsBDD.getProduitWithTitre("Player").getQuantity() + value);
-        produitsBDD.updateProduit("Player", produit);
-        /*String gold = "";
-
-        FileInputStream fis = null;
-
-        try {
-            fis = openFileInput(Constante.GOLD_FILE);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String text;
-
-            while ((text = br.readLine()) != null) {
-                sb.append(text).append("\n");
-            }
-
-            gold = sb.toString().trim();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        if (Integer.parseInt(gold) + value < 0) {
-            gold = "0";
-        } else {
-            gold = String.valueOf(Integer.parseInt(gold) + value);
-        }
-
-        FileOutputStream fos = null;
-
-        try {
-            fos = openFileOutput(Constante.GOLD_FILE, MODE_PRIVATE);
-            fos.write(gold.getBytes());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }*/
+        Produit produit = new Produit("Gold", produitsBDD.getProduitWithTitre("Gold").getQuantity() + value);
+        produitsBDD.updateProduit("Gold", produit);
     }
 
 }
