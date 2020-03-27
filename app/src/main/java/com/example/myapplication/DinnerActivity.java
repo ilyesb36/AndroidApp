@@ -1,11 +1,11 @@
 package com.example.myapplication;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,11 +14,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.classes.Produit;
 import com.example.myapplication.classes.ProduitsBDD;
 
+import java.util.HashMap;
+
 public class DinnerActivity extends AppCompatActivity {
 
-    TextView quantityApple;
-    TextView quantityBanana;
-    TextView quantityPotion;
+    TextView quantityFirst;
+    TextView quantitySecond;
+    TextView quantityThird;
+
+    int position = 0;
+
+    ImageView iFirst;
+    ImageView iSecond;
+    ImageView iThird;
+
+    HashMap<String,String> list;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,21 +38,75 @@ public class DinnerActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_dinner);
 
-        quantityApple = (TextView) findViewById(R.id.quantityApple);
-        quantityBanana = (TextView) findViewById(R.id.quantityBanana);
-        quantityPotion = (TextView) findViewById(R.id.quantityPotion);
+        list = new HashMap<>();
+
+        list.put("Apple","apple");
+        list.put("Banana", "banana");
+        list.put("Potion", "potion");
+        list.put("Orange", "orange");
+        list.put("Strawberry", "strawberry");
+
+        iFirst = (ImageView) findViewById(R.id.first);
+        iSecond = (ImageView) findViewById(R.id.second);
+        iThird = (ImageView) findViewById(R.id.third);
+
+
+
+        updateList();
+
+
+        quantityFirst = (TextView) findViewById(R.id.quantityFirst);
+        quantitySecond = (TextView) findViewById(R.id.quantitySecond);
+        quantityThird = (TextView) findViewById(R.id.quantityThird);
 
         updateQuatity();
     }
 
+    private void updateList() {
+        String first = (String) list.keySet().toArray()[position];
+        if (list.size()>position+1){
+            String second = (String) list.keySet().toArray()[position + 1];
+            fixImage(second, iSecond);
+            if(list.size()>position+2){
+                String third = (String) list.keySet().toArray()[position + 2];
+                fixImage(third, iThird);
+            }
+        }
+        fixImage(first, iFirst);
+
+
+    }
+
+    private void fixImage(String first, ImageView imageView) {
+        if(list.get(first).equals("apple")){
+            imageView.setImageResource(R.drawable.apple);
+        }else if(list.get(first).equals("banana")){
+            imageView.setImageResource(R.drawable.banana);
+        }else if(list.get(first).equals("potion")){
+            imageView.setImageResource(R.drawable.potion);
+        }else if (list.get(first).equals("orange")){
+            imageView.setImageResource(R.drawable.orange);
+        }else if (list.get(first).equals("strawberry")){
+            imageView.setImageResource(R.drawable.strawberry);
+        }
+    }
+
+
     public void updateQuatity(){
         ProduitsBDD produitsBDD = new ProduitsBDD(this);
         produitsBDD.open();
-        quantityApple.setText(Integer.toString(produitsBDD.getQuantityWithTitle("Apple")));
-        quantityBanana.setText(Integer.toString(produitsBDD.getQuantityWithTitle("Banana")));
-        quantityPotion.setText(Integer.toString(produitsBDD.getQuantityWithTitle("Potion")));
+        String first = (String) list.keySet().toArray()[position];
+        if (list.size()>position+1){
+            String second = (String) list.keySet().toArray()[position + 1];
+            quantitySecond.setText(Integer.toString(produitsBDD.getQuantityWithTitle(second)));
+            if(list.size()>position+2){
+                String third = (String) list.keySet().toArray()[position + 2];
+                quantityThird.setText(Integer.toString(produitsBDD.getQuantityWithTitle(third)));
+            }
+        }
 
-        produitsBDD.updateProduit("Player", new Produit("Player", 2000));
+        quantityFirst.setText(Integer.toString(produitsBDD.getQuantityWithTitle(first)));
+
     }
 
     public void goMainActivity(View view) {
@@ -86,5 +151,22 @@ public class DinnerActivity extends AppCompatActivity {
             Toast.makeText(this, "Vous n'avez pas assez de potions", Toast.LENGTH_SHORT).show();
         }
         updateQuatity();
+    }
+
+    public void right(View view) {
+        if(list.size()>position + 3){
+            position = position + 3;
+            updateList();
+            updateQuatity();
+        }
+
+    }
+
+    public void left(View view) {
+        if(position != 0){
+            position = position - 3;
+            updateList();
+            updateQuatity();
+        }
     }
 }

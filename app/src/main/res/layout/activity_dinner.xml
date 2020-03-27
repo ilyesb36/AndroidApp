@@ -8,6 +8,32 @@
     tools:context=".DinnerActivity" >
 
     <ImageView
+        android:id="@+id/right"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.814"
+        app:srcCompat="@drawable/right" />
+
+    <ImageView
+        android:id="@+id/left"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.814"
+        app:srcCompat="@drawable/left" />
+
+    <ImageView
         android:id="@+id/backMainShop"
         android:layout_width="65dp"
         android:layout_height="80dp"
@@ -30,7 +56,7 @@
         app:srcCompat="@drawable/banc" />
 
     <ImageView
-        android:id="@+id/apple"
+        android:id="@+id/first"
         android:layout_width="92dp"
         android:layout_height="78dp"
         android:onClick="eatApple"
@@ -39,11 +65,10 @@
         app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.82"
-        app:srcCompat="@drawable/apple" />
+        app:layout_constraintVertical_bias="0.82" />
 
     <TextView
-        android:id="@+id/quantityApple"
+        android:id="@+id/quantityFirst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -56,7 +81,7 @@
         app:layout_constraintVertical_bias="0.826" />
 
     <ImageView
-        android:id="@+id/banana"
+        android:id="@+id/second"
         android:layout_width="92dp"
         android:layout_height="78dp"
         android:onClick="eatBanana"
@@ -65,11 +90,10 @@
         app:layout_constraintHorizontal_bias="0.451"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.814"
-        app:srcCompat="@drawable/banana" />
+        app:layout_constraintVertical_bias="0.814" />
 
     <TextView
-        android:id="@+id/quantityBanana"
+        android:id="@+id/quantitySecond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -82,7 +106,7 @@
         app:layout_constraintVertical_bias="0.826" />
 
     <ImageView
-        android:id="@+id/potion"
+        android:id="@+id/third"
         android:layout_width="92dp"
         android:layout_height="78dp"
         android:onClick="drinkPotion"
@@ -91,12 +115,11 @@
         app:layout_constraintHorizontal_bias="0.764"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.814"
-        app:srcCompat="@drawable/potion" />
+        app:layout_constraintVertical_bias="0.814" />
 
 
     <TextView
-        android:id="@+id/quantityPotion"
+        android:id="@+id/quantityThird"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
