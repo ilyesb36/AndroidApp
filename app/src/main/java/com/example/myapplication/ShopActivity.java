@@ -69,4 +69,30 @@ public class ShopActivity extends AppCompatActivity {
             Toast.makeText(this, "Vous avez maintenant "  + Integer.toString(produitsBDD.getProduitWithTitre("Potion").getQuantity()) + " potions", Toast.LENGTH_LONG).show();
         }else Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_SHORT).show();
     }
+
+    public void addStrawberry(View view) {
+        ProduitsBDD produitsBDD = new ProduitsBDD(this);
+
+        produitsBDD.open();
+
+        if (produitsBDD.getProduitWithTitre("Gold").getQuantity()>28){
+            produitsBDD.ajouterProduit("Strawberry");
+            Produit produit = new Produit("Gold", produitsBDD.getProduitWithTitre("Gold").getQuantity() - 28);
+            produitsBDD.updateProduit("Gold", produit);
+            Toast.makeText(this, "Vous avez maintenant "  + Integer.toString(produitsBDD.getProduitWithTitre("Strawberry").getQuantity()) + " fraises", Toast.LENGTH_LONG).show();
+        }else Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_SHORT).show();
+    }
+
+    public void addOrange(View view) {
+        ProduitsBDD produitsBDD = new ProduitsBDD(this);
+
+        produitsBDD.open();
+
+        if (produitsBDD.getProduitWithTitre("Gold").getQuantity()>28){
+            produitsBDD.ajouterProduit("Orange");
+            Produit produit = new Produit("Gold", produitsBDD.getProduitWithTitre("Gold").getQuantity() - 10);
+            produitsBDD.updateProduit("Gold", produit);
+            Toast.makeText(this, "Vous avez maintenant "  + Integer.toString(produitsBDD.getProduitWithTitre("Orange").getQuantity()) + " oranges", Toast.LENGTH_LONG).show();
+        }else Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_SHORT).show();
+    }
 }

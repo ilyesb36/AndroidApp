@@ -3,4 +3,6 @@
     <string name="price_apple">15</string>
     <string name="price_banana">12</string>
     <string name="price_potion">50</string>
+    <string name="price_orange">10</string>
+    <string name="price_strawberry">28</string>
 </resources>

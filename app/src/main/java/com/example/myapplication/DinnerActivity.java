@@ -119,10 +119,11 @@ public class DinnerActivity extends AppCompatActivity {
         ProduitsBDD produitsBDD = new ProduitsBDD(this);
         produitsBDD.open();
 
-        if(produitsBDD.getQuantityWithTitle("Apple")>0){
-            produitsBDD.decrementerProduit("Apple",1);
+        String first = (String) list.keySet().toArray()[position];
+        if(produitsBDD.getQuantityWithTitle(first)>0){
+            produitsBDD.decrementerProduit(first,1);
         }else {
-            Toast.makeText(this, "Vous n'avez pas assez de pommes", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vous n'avez pas assez de " + first + " ", Toast.LENGTH_SHORT).show();
         }
 
         updateQuatity();
@@ -133,22 +134,34 @@ public class DinnerActivity extends AppCompatActivity {
         ProduitsBDD produitsBDD = new ProduitsBDD(this);
         produitsBDD.open();
 
-        if(produitsBDD.getQuantityWithTitle("Banana")>0){
-            produitsBDD.decrementerProduit("Banana",1);
+        String second = "Banana";
+        if (list.size()>position+1){
+             second = (String) list.keySet().toArray()[position + 1];
         }else {
-            Toast.makeText(this, "Vous n'avez pas assez de bananes", Toast.LENGTH_SHORT).show();
+             second = (String) list.keySet().toArray()[position - 3 + 1];
+        }
+        if(produitsBDD.getQuantityWithTitle(second)>0){
+            produitsBDD.decrementerProduit(second,1);
+        }else {
+            Toast.makeText(this, "Vous n'avez pas assez de " + second+ " ", Toast.LENGTH_SHORT).show();
         }
         updateQuatity();
     }
 
     public void drinkPotion(View view) {
+        String third = "potion";
+        if (list.size()>position+2){
+            third = (String) list.keySet().toArray()[position + 2];
+        }else {
+            third = (String) list.keySet().toArray()[position - 3 + 2];
+        }
         ProduitsBDD produitsBDD = new ProduitsBDD(this);
         produitsBDD.open();
 
-        if(produitsBDD.getQuantityWithTitle("Potion")>0){
-            produitsBDD.decrementerProduit("Potion",1);
+        if(produitsBDD.getQuantityWithTitle(third)>0){
+            produitsBDD.decrementerProduit(third,1);
         }else {
-            Toast.makeText(this, "Vous n'avez pas assez de potions", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vous n'avez pas assez de " + third+ " ", Toast.LENGTH_SHORT).show();
         }
         updateQuatity();
     }
