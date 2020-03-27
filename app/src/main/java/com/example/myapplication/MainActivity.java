@@ -10,13 +10,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.example.myapplication.classes.Produit;
 import com.example.myapplication.classes.ProduitsBDD;
 
-
 public class MainActivity extends AppCompatActivity {
 
+    TextView level;
+    ProduitsBDD produitsBDD;
     TextView goldValue;
+    RoundCornerProgressBar expBar;
+    RoundCornerProgressBar healthBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +29,8 @@ public class MainActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-        ProduitsBDD produitsBDD = new ProduitsBDD(this);
-
+        produitsBDD = new ProduitsBDD(this);
         produitsBDD.open();
-
         if (produitsBDD.getProduitWithTitre("Apple") == null){
             Produit produit = new Produit("Apple", 0);
             produitsBDD.insertProduit(produit);
@@ -43,16 +45,35 @@ public class MainActivity extends AppCompatActivity {
             Produit produit = new Produit("Potion", 0);
             produitsBDD.insertProduit(produit);
         }
+
         if (produitsBDD.getProduitWithTitre("Gold") == null){
             Produit produit = new Produit("Gold", 200);
             produitsBDD.insertProduit(produit);
         }
+
         if (produitsBDD.getProduitWithTitre("Health") == null) {
             Produit produit = new Produit("Health", 200);
             produitsBDD.insertProduit(produit);
         }
 
+        if (produitsBDD.getProduitWithTitre("Experience") == null) {
+            Produit produit = new Produit("Experience", 0);
+            produitsBDD.insertProduit(produit);
+        }
+
+        if (produitsBDD.getProduitWithTitre("Level") == null) {
+            Produit produit = new Produit("Level", 1);
+            produitsBDD.insertProduit(produit);
+        }
+
+        this.level = findViewById(R.id.level);
+        this.level.bringToFront();
         this.goldValue = findViewById(R.id.goldValue);
+        this.expBar = findViewById(R.id.expBar);
+        this.healthBar = findViewById(R.id.healthBar);
+        this.level.setText(String.valueOf(produitsBDD.getQuantityWithTitle("Level")));
+        this.expBar.setProgress(produitsBDD.getQuantityWithTitle("Experience"));
+        this.healthBar.setProgress(produitsBDD.getQuantityWithTitle("Health"));
 
         // Load gold value from a file of internal storage
         int gold = produitsBDD.getProduitWithTitre("Gold").getQuantity();
@@ -65,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        this.level.setText(String.valueOf(produitsBDD.getQuantityWithTitle("Level")));
+        this.expBar.setProgress(produitsBDD.getQuantityWithTitle("Experience"));
     }
 
     public void goActShop(View view) {

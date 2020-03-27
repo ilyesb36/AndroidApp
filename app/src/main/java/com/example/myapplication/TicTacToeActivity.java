@@ -16,6 +16,7 @@ import com.example.myapplication.classes.ProduitsBDD;
 
 public class TicTacToeActivity extends Activity implements View.OnClickListener {
 
+    ProduitsBDD produitsBDD;
     private ImageButton[][] btns;
     private boolean player1Turn;
     private int roundCount;
@@ -47,13 +48,10 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onStop() {
         super.onStop();
-
     }
 
     @Override
     public void onClick(View view) {
-
-
         ImageButton imgBtn = ((ImageButton) view);
 
         if ( !imgBtn.getTag().equals("") ) {
@@ -83,6 +81,8 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
                             public void onClick(DialogInterface dialog, int id) {
                                 // Augmenter le nombre de gold de 20
                                 updateGold(20);
+                                // Augmenter l'expérience
+                                increaseExp(10);
                                 // Aller vers l'accueil
                                 dialog.cancel();
                                 Intent intent = new Intent(TicTacToeActivity.this, MainActivity.class);
@@ -191,12 +191,25 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
     }
 
     private void updateGold(int value) {
-        ProduitsBDD produitsBDD = new ProduitsBDD(this);
-
+        produitsBDD = new ProduitsBDD(this);
         produitsBDD.open();
-
         Produit produit = new Produit("Gold", produitsBDD.getProduitWithTitre("Gold").getQuantity() + value);
         produitsBDD.updateProduit("Gold", produit);
+    }
+
+    private void increaseExp(int value) {
+        produitsBDD = new ProduitsBDD(this);
+        produitsBDD.open();
+        int exp = produitsBDD.getQuantityWithTitle("Experience") + value;
+        if (exp > 500) {
+            Produit produit = new Produit("Experience", exp - 500);
+            produitsBDD.updateProduit("Experience", produit);
+            produitsBDD.updateProduit("Level", new Produit("Level", produitsBDD.getQuantityWithTitle("Level") + 1));
+        } else {
+            Produit produit = new Produit("Experience", exp);
+            produitsBDD.updateProduit("Experience", produit);
+        }
+
     }
 
 }
