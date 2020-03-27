@@ -77,7 +77,7 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
             if (!player1Turn) {
                 builder1.setTitle("Bravo ! Vous avez gagné");
                 builder1.setMessage("Vous pouvez récupérer 20 pièces !");
-                builder1.setCancelable(true);
+                builder1.setCancelable(false);
 
                 builder1.setPositiveButton("Récupéré", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -96,7 +96,7 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
             } else {
                 builder1.setTitle("Dommage, vous avez perdu...");
                 builder1.setMessage("Vous avez perdu 5 pièces...");
-                builder1.setCancelable(true);
+                builder1.setCancelable(false);
 
                 builder1.setPositiveButton("Sortir", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -116,7 +116,7 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
         } else if (this.roundCount == 9) {
             builder1.setTitle("Égalité !");
             builder1.setMessage("Vous voulez faire un autre essai ?");
-            builder1.setCancelable(true);
+            builder1.setCancelable(false);
 
             builder1.setPositiveButton("Sortir", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
