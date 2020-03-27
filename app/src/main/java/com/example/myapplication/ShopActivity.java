@@ -32,9 +32,11 @@ public class ShopActivity extends AppCompatActivity {
         if (objetctsBDD.getProduitWithTitre("Gold").getQuantity()>15){
             objetctsBDD.ajouterProduit("Apple");
             Object object = new Object("Gold", objetctsBDD.getProduitWithTitre("Gold").getQuantity() - 15);
-            objetctsBDD.updateProduit("Gold", object);Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_SHORT).show();
+            objetctsBDD.updateProduit("Gold", object);
             Toast.makeText(this, "Vous avez maintenant " + Integer.toString(objetctsBDD.getProduitWithTitre("Apple").getQuantity()) + " pommes", Toast.LENGTH_LONG).show();
-        } else Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Vous n'avez pas assez de pièces", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void addBanana(View view) {

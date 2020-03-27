@@ -119,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
         int gold = objetctsBDD.getProduitWithTitre("Gold").getQuantity();
         goldValue.setText(Integer.toString(gold));
 
-        MediaPlayer ring = MediaPlayer.create(MainActivity.this,R.raw.ring);
+        MediaPlayer ring = MediaPlayer.create(MainActivity. this,R.raw.ring);
+        
         ring.start();
     }
 
