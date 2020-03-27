@@ -130,7 +130,7 @@ public class DinnerActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void eatApple(View view) {
+    public void eatFirst(View view) {
         ObjetctsBDD objetctsBDD = new ObjetctsBDD(this);
         objetctsBDD.open();
 
@@ -147,7 +147,7 @@ public class DinnerActivity extends AppCompatActivity {
 
     }
 
-    public void eatBanana(View view) {
+    public void eatSecond(View view) {
         ObjetctsBDD objetctsBDD = new ObjetctsBDD(this);
         objetctsBDD.open();
 
@@ -167,7 +167,7 @@ public class DinnerActivity extends AppCompatActivity {
         updateQuatity();
     }
 
-    public void drinkPotion(View view) {
+    public void eatThird(View view) {
         String third = "potion";
         if (list.size()>position+2){
             third = (String) list.keySet().toArray()[position + 2];
