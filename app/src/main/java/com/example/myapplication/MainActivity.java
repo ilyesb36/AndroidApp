@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.myapplication.classes.Constante;
+import com.example.myapplication.classes.Produit;
+import com.example.myapplication.classes.ProduitsBDD;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -30,11 +32,37 @@ public class MainActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
+        ProduitsBDD produitsBDD = new ProduitsBDD(this);
+
+        produitsBDD.open();
+
+        if (produitsBDD.getProduitWithTitre("Apple") == null){
+            Produit produit = new Produit("Apple", 0);
+            produitsBDD.insertProduit(produit);
+        }
+
+        if (produitsBDD.getProduitWithTitre("Banana") == null){
+            Produit produit = new Produit("Banana", 0);
+            produitsBDD.insertProduit(produit);
+        }
+
+        if (produitsBDD.getProduitWithTitre("Potion") == null){
+            Produit produit = new Produit("Potion", 0);
+            produitsBDD.insertProduit(produit);
+        }
+        if (produitsBDD.getProduitWithTitre("Player") == null){
+            Produit produit = new Produit("Player", 200);
+            produitsBDD.insertProduit(produit);
+        }
+
+
         this.goldValue = findViewById(R.id.goldValue);
 
         // Load gold value from a file of internal storage
         this.getGold();
 
+        int gold = produitsBDD.getProduitWithTitre("Player").getQuantity();
+        goldValue.setText(Integer.toString(gold));
         MediaPlayer ring = MediaPlayer.create(MainActivity.this,R.raw.ring);
         ring.start();
     }

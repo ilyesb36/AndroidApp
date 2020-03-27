@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.myapplication.classes.Constante;
+import com.example.myapplication.classes.Produit;
+import com.example.myapplication.classes.ProduitsBDD;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -58,6 +60,7 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+
 
         ImageButton imgBtn = ((ImageButton) view);
 
@@ -110,6 +113,7 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
                                 // Aller vers page d'accueil
                                 dialog.cancel();
                                 Intent intent = new Intent(TicTacToeActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }
                         });
@@ -195,7 +199,13 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
     }
 
     private void updateGold(int value) {
-        String gold = "";
+        ProduitsBDD produitsBDD = new ProduitsBDD(this);
+
+        produitsBDD.open();
+
+        Produit produit = new Produit("Player", produitsBDD.getProduitWithTitre("Player").getQuantity() + value);
+        produitsBDD.updateProduit("Player", produit);
+        /*String gold = "";
 
         FileInputStream fis = null;
 
@@ -249,7 +259,7 @@ public class TicTacToeActivity extends Activity implements View.OnClickListener 
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
     }
 
 }
